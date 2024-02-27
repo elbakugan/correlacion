@@ -1,0 +1,44 @@
+---
+title: "Untitled"
+output: html_document
+date: "2024-02-26"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r echo=TRUE}
+library(readxl)
+data = as.data.frame(read_excel("c:/data.xlsx"))
+data
+```
+{r}
+# Función para agregar coeficientes de correlación
+```panel.cor = function(x, y, digits = 2, prefix = "", cex.cor, ...) {
+  usr = par("usr")
+  on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  Cor = abs(cor(x, y))
+  txt = paste0(prefix, format(c(Cor, 0.123456789), digits = digits)[1])
+  if(missing(cex.cor)) {
+    cex.cor = 0.4 / strwidth(txt)
+  }
+  text(0.5, 0.5, txt,
+       cex = 1 + cex.cor * Cor)
+}
+pairs(data,
+      upper.panel = panel.cor,
+      lower.panel = panel.smooth)
+```
+
+
+```{r echo=TRUE}
+cor.test(data$longitud, data$peso)
+´´´
+
+```{r warning=FALSE}
+library(correlation)
+resultados = correlation(data)
+resultados
+```
